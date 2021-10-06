@@ -1,0 +1,16 @@
+Home page contains side pannel and welcome page. 
+Welcome page contains dinamic contant with info about num of recipes and author(with status - active). 
+Side pannel contains site navigation(links Home, All recipes and all authors) below there is a profile information: link with user's profile, link to create a new recipe, 
+and login/logout links.
+
+There's not a registration page. But data base have three profiles Admin(login: admin, password: admin), Active author(login: Anatoliy_Good, password: Anatoliy123)
+and Blocked author(login: Anatoliy_Bad, password: Anatoliy123). Logins page have links to change password if you don't remember it.
+
+By navigation pannel you may follow the page with all recipes where you may see available types of dish and available recipes with 
+title, pub date, summary, image and hashtags without cooking steps.
+Admins API also include list of blocked recipes and links to block/activate them. Page have pagination = 10 units with ordering by pub date(without choices and filters).
+Each recipe have a link to its own page with the same info plus status, authors nickname and cooking steps.
+
+By navigation pannel you may follow the page with all authors with authors nickname and profile's id.
+Admins API also include list of blocked authors and links to block/activate them. Page have pagination = 10 units with ordering by nickname.
+Each author have a link to his own page with the same info plus status and recipes made by him.
