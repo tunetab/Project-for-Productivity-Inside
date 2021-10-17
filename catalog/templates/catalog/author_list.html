@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Authors List</h1>
+
+    {% if author_list %}
+        <ul>
+            <h3>There are authors who wrote the most recipes in our library:</h3>
+              {% for author in author_list %}
+                  {% if author.status == "a" %}
+                      <li>
+                        <p><a href="{{ author.get_absolute_url }}">{{ author.nickname }}</a> ({{ author.id }}, status:{{ author.status }}) </p>
+                          <p>Number of recipes we have: {{ author.num_recipes }}</p>
+                      </li>
+                  {% endif %}
+              {% endfor %}
+            {% if perms.catalog.can_mark_blocked %}
+            
+            <h3>These authors are blocked:</h3>
+                {% for author in author_list %}
+                    {% if author.status == "b" %}
+                      <li class="text-danger">
+                        <a href="{{ author.get_absolute_url }}">{{ author.nickname }}</a> ({{ author.id }})
+                          <p> Status: {{ author.status }}</p>
+                      </li>
+                  {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+        {% else %}
+      <h3>There are no authors in the library.</h3>
+    {% endif %}
+{% endblock %}

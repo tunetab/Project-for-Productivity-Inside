@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>{{ author.nickname }}</h1>
+  <p>Id : {{ author.id }}</p>
+  {% if author.status == 'a' %} <p>Status:<font color = "green"> Active </font> {% if perms.catalog.can_mark_blocked %}- <a href="{% url 'author_update' author.pk %}">Block</a></p>  {% endif %}
+  {% else %} <p>Status:<font color = "red"> Blocked </font> {% if perms.catalog.can_mark_blocked %}- <a href="{% url 'author_update' author.pk %}">Activate</a></p>  {% endif %}
+  {% endif %}
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Recipes</h4>
+
+    {% for recipe in author.recipe_set.all %}
+    <img src="{{ recipe.photo.url }}" style="width:200px;"/>
+    <a href="{{ recipe.get_absolute_url }}">{{ recipe.title }}</a>  ({{ recipe.pub_date }})
+    <p>{{ recipe.summary }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}

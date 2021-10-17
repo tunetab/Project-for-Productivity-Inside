@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Recipe List</h1>
+    {% if recipe_list %}
+    <ul>
+        <h3>There are recipes of following types of dish:
+          {% for recipe in recipe_list %}
+            {{ recipe.display_type }},
+          {% endfor %}
+        </h3>
+          {% for recipe in recipe_list %}
+            {% if recipe.status == "a" %}
+                <li>
+                  <img src="{{ recipe.photo.url }}" style="width:200px;"/>
+                  <a href="{{ recipe.get_absolute_url }}">{{ recipe.title }}</a> ({{ recipe.pub_date }})
+                  <p><strong>Author:</strong> <a href="{{ recipe.author.get_absolute_url }}">{{ recipe.author }} </a></p>
+                  <p><strong>Type:</strong> {% for type in recipe.type.all %} {{ type }} {% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                  <p>{{ recipe.summary }}</p>
+                  <p>{{ recipe.hashtag }}</p>
+                </li>
+            {% endif %}
+          {% endfor %}
+        {% if perms.catalog.can_mark_blocked %}
+            <h3>These recipes are blocked:</h3>
+                {% for recipe in recipe_list %}
+                    {% if recipe.status == "b" %}
+                        <li class="text-danger">
+                            <img src="{{ recipe.photo.url }}" style="width:200px;"/>
+                            <a href="{{ recipe.get_absolute_url }}">{{ recipe.title }}</a> ({{ recipe.pub_date }})
+                            <p><strong>Author:</strong> <a href="{{ recipe.author.get_absolute_url }}">{{ recipe.author }} </a></p>
+                            <p><strong>Type:</strong> {% for type in recipe.type.all %} {{ type }} {% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                            <p>{{ recipe.summary }}</p>
+                            <p>{{ recipe.hashtag }}</p>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+        {% endif %}
+    </ul>
+    {% else %}
+      <p>There are no available recipes in the library.</p>
+    {% endif %}
+{% endblock %}
